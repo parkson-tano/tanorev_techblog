@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}
+  Create Post
+{% endblock title %}
+{% block header %}
+  <header class="masthead" style="background-image: url('{% static 'home-bg.jpg' %}')">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="site-heading">
+                    <h1>Create for Impact</h1>
+                    <span class="subheading">Center of Diversity</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+{% endblock header %}
+{% block content %}
+<div class="container">
+        <div class="row">
+            <div class="col-md-12 mx-auto mb-1">
+                <h3>Upload Product</h3>
+            <hr>
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{form|crispy}}
+                <button class="btn btn-info">Upload Product</button>
+            </form>
+        </div>
+    </div>
+
+{% endblock content %}

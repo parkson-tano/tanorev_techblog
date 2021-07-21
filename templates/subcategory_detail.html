@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block header %}
+<header class="masthead" style="background-image: url('assets/img/home-bg.jpg')">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="site-heading">
+                    <h1>{{subcategory.name}}</h1>
+                    <span class="subheading">Just Learn</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+{% endblock header %}
+{% block content %}
+<div class="row gx-4 gx-lg-5 justify-content-center">
+    {% for p in post %}
+    <div class="col-md-10 col-lg-8 col-xl-7">
+        <div class="post-preview">
+            <a href="{% url 'review:postdetail' p.slug %}">
+                <h2 class="post-title">{{p.title}}</h2>
+                <h3 class="post-subtitle">{{p.excerpt}}</h3>
+            </a>
+            <p class="post-meta">
+                Posted by
+                <a href="#!">{{p.author}}</a>
+                on {{p.date_created}}
+            </p>
+
+        </div>
+        <!-- Divider-->
+        <hr class="my-4" />
+    </div>
+    {% endfor %}
+
+</div>
+    {% endblock content %}
