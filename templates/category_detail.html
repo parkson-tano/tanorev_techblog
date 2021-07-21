@@ -12,48 +12,45 @@
         </div>
     </div>
 </header>
-{% endblock header %}
-{% block content %}
-        <!-- Top navigation-->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-            <div class="container-fluid">
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation"><span
-                        class="navbar-toggler-icon"></span></button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
-                        <li class="nav-item active"><a class="nav-link" href="#!">All</a></li>
-                        {% for sub in subcategory %}
-                        <li class="nav-item"><a class="nav-link"
-                                href="{% url 'review:filter_subcategory' sub.pk %}">{{sub.name}}</a></li>
-                        {% endfor %}
-
-
-                    </ul>
-                </div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style='color:black'>
+    <div class="container">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent1"
+            aria-controls="navbarSupportedContent1" aria-expanded="false" aria-label="Toggle navigation"><span
+                class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent1">
+            <div class="navbar-nav">
+                                <a class="nav-link" href="#!">All</a></li>
+                {% for sub in subcategory %}
+                <a class="nav-link"
+                        href="{% url 'review:filter_subcategory' sub.pk %}">{{sub.name}}</a>
+                {% endfor %}
             </div>
-        </nav>
-        <div class="row gx-4 gx-lg-5 justify-content-center">
-            {% for p in post %}
-            <div class="col-md-10 col-lg-8 col-xl-7">
-                <div class="post-preview">
-                    <a href="{% url 'review:postdetail' p.slug %}">
-                        <h2 class="post-title">{{p.title}}</h2>
-                        <h3 class="post-subtitle">{{p.excerpt}}</h3>
-                    </a>
-                    <p class="post-meta">
-                        Posted by
-                        <a href="#!">{{p.author}}</a>
-                        on {{p.date_created}}
-                    </p>
-
-                </div>
-                <!-- Divider-->
-                <hr class="my-4" />
-            </div>
-
-            {% endfor %}
 
         </div>
-    {% endblock content %}
+    </div>
+</nav>
+{% endblock header %}
+{% block content %}
+<div class="row gx-4 gx-lg-5 justify-content-center">
+    {% for p in post %}
+    <div class="col-md-10 col-lg-8 col-xl-7">
+        <div class="post-preview">
+            <a href="{% url 'review:postdetail' p.slug %}">
+                <h2 class="post-title">{{p.title}}</h2>
+                <h3 class="post-subtitle">{{p.excerpt}}</h3>
+            </a>
+            <p class="post-meta">
+                Posted by
+                <a href="#!">{{p.author}}</a>
+                on {{p.date_created}}
+            </p>
+
+        </div>
+        <!-- Divider-->
+        <hr class="my-4" />
+    </div>
+
+    {% endfor %}
+
+</div>
+{% endblock content %}
