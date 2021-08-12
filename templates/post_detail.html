@@ -19,17 +19,142 @@
 </header>
 {% endblock header %}
 {% block content %}
-<article class="mb-4">
-  <div class="container px-4 px-lg-5">
-    <div class="row gx-4 gx-lg-5 justify-content-center">
-      <div class="col-md-5 col-lg-5 col-xl-7">
-        <p>
-          {{post.content|safe}}
-        </p>
-        {{form|crispy}}
-        <button type='submit'>dd</button>
+<!-- Page content-->
+<div class="container">
+  <div class="row mt-4">
+    <!-- Blog entries-->
+    <div class="col-lg-8">
+      <!-- Featured blog post-->
+      <div class="card mb-4">
+        <div class="card-body">
+
+          <p class="card-text">{{post.content|safe}}</p>
+
+        </div>
+      </div>
+      <!-- Nested row for non-featured blog posts-->
+      <div class="row">
+        <div class="col-lg-8">
+          <!-- Blog post-->
+          <h2>Leave your comment!</h2>
+          <div id="comments_section">
+            <form method="POST">
+              {% csrf_token %}
+              <div class="form-group">
+                {{ comment_form|crispy }}
+                <button class="btn btn-info" type="submit">Add comment <i class="fas fa-comments"></i></button>
+              </div>
+            </form>
+
+            {% if comments %}
+            <strong class="text-secondary">{{ object.number_of_comments }}
+              Comment{{object.number_of_comments|pluralize}}</strong>
+            <hr>
+            <ul>
+              {% for comment in comments %}
+              <li>
+                <div>
+                  <span>
+                    <strong class="text-info">{{ comment.author }} </strong>
+                    <small class="text-muted">{{ comment.date_posted }}</small>
+                  </span>
+                  <p>
+                    {{ comment.content|safe }}
+                  </p>
+                </div>
+              </li>
+              {% endfor %}
+            </ul>
+            {% else %}
+            <strong class="text-secondary">No comments yet...</strong>
+            {% endif %}
+
+          </div>
+        </div>
+
+
+        <!-- Blog post-->
+      </div>
+      <!-- Pagination-->
+    </div>
+    <!-- Side widgets-->
+    <div class="col-lg-4">
+      <!-- Search widget-->
+      <div class="card mb-4">
+        <div class="card-header">Search</div>
+        <div class="card-body">
+
+          <form action="{% url 'review:search' %}" method="GET">
+            <div class="input-group">
+              {% csrf_token %}
+              <input class="form-control" type="text" placeholder="Enter search term..."
+                aria-label="Enter search term..." aria-describedby="button-search" name='keyword' />
+              <button class="btn btn-primary">Go!</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    <!-- Categories widget-->
+    <div class="card mb-4">
+      <div class="card-header">Categories</div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-sm-6 col-lg-12">
+            <ul class="list-unstyled mb-0">
+              {% for cat in all_categories %}
+              <li class="mb-2"><a href="{% url 'review:filter_category' cat.slug %}">
+                  <strong>
+                    {{cat.name}}
+                  </strong>
+                </a>
+                <ul>
+                  {% for sub in cat.subcategory_set.all %}
+                  <li>
+                    <a href="{% url 'review:filter_subcategory' sub.slug %}">
+                      {{sub.name}}
+                    </a>
+                  </li>
+                  {% endfor %}
+                </ul>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Side widget-->
+    <div class="card mb-4">
+      <div class="card-header">Recent Post</div>
+      <div class="card-body">
+        {% for p in recent_post %}
+        <div class="post-preview">
+          <a href="{% url 'review:postdetail' p.slug %}">
+            <h2 class="post-title">{{p.title}}</h2>
+            <h3 class="post-subtitle">{{p.excerpt}}</h3>
+          </a>
+          <p class="post-meta">
+            Posted by
+            <a href="#!">{{p.author}}</a>
+            on {{p.date_created|timesince}}
+          </p>
+
+        </div>
+        <!-- Divider-->
+        <hr class="my-4" />
+        {% endfor %}
       </div>
     </div>
   </div>
-</article>
-{% endblock content %}
+</div>
+</div>
+</div>
+</div>
+<!-- Footer-->
+<footer class="py-5 bg-dark">
+  <div class="container">
+    <p class="m-0 text-center text-white">Copyright &copy; Your Website 2021</p>
+  </div>
+</footer>
+
+{% endblock content%}

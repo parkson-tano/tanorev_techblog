@@ -28,53 +28,27 @@ class HomeView(TemplateView):
         context['subcat'] = subcat
         return context
 
-class PostDetailView(TemplateView):
+class PostDetailView(DetailView):
     template_name = 'post_detail.html'
-    success_url = reverse_lazy('review:postdetail')
+    context_object_name = 'post'
+    model = Post
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        url_slug = kwargs['slug']
-
-        form = CommentForm()
-
-        post = Post.objects.get(slug=url_slug)
-        comment = post.comment_set.all()
-        category = Category.objects.all()
-        post.view_count += 1
-        post.save()
-        context['category'] = category
-        context["post"] = post 
-        context['form'] = form
-        context['comment'] = comment
-
+        comments_connected = Comment.objects.filter(
+            post=self.get_object()).order_by('-date_created')
+        context["comments"] = comments_connected
+        context['comment_form'] = CommentForm
         return context
 
     def post(self, request, *args, **kwargs):
-        form = CommentForm(request.POST)
-        self.object = self.get_object()
-        context = super().get_context_data(**kwargs)
-
-        post = Post.objects.filter(id=self.kwargs['pk'])[0]
-        comments = post.comment_set.all()
-
-        context['post'] = post
-        context['comments'] = comments
-        context['form'] = form
-
-        if form.is_valid():
-            name = form.cleaned_data['name']
-            email = form.cleaned_data['email']
-            content = form.cleaned_data['content']
-
-            comment = Comment.objects.create(
-                name=name, email=email, content=content, post=post
-            )
-
-            form = CommentForm()
-            context['form'] = form
-            return self.render_to_response(context=context)
-
-        return self.render_to_response(context=context)
+        new_comment = Comment(content=request.POST.get('content'),
+                                  name=request.POST.get('name'),
+                                  email = request.POST.get('email'),
+                                  post=self.get_object())
+        new_comment.save()
+        return self.get(self, request, *args, **kwargs)
+    
 
 class CategoryDetailView(TemplateView):
     template_name = 'category_detail.html'
@@ -91,7 +65,7 @@ class CategoryDetailView(TemplateView):
         context['ca'] = category
         return context
 
-class SubCategoryDetailView(NavbarView):
+class SubCategoryDetailView(TemplateView):
     template_name = 'subcategory_detail.html'
 
     def get_context_data(self, **kwargs):

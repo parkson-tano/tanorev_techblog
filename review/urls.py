@@ -4,7 +4,7 @@ from django.contrib.auth import views as auth_views
 app_name = 'review'
 urlpatterns = [
     path('', HomeView.as_view(), name='index'),
-    path('<slug:slug>', PostDetailView.as_view(), name='postdetail'),
+    path('<slug>', PostDetailView.as_view(), name='postdetail'),
     path('category/<slug:slug>', CategoryDetailView.as_view(), name='filter_category'),
     path('subcategory/<slug:slug>', SubCategoryDetailView.as_view(), name='filter_subcategory'),
     path('search/', SearchView.as_view(), name='search'),
