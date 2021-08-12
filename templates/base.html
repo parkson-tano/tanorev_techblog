@@ -51,31 +51,20 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-              <a href="{% url 'review:index' %}" class='nav-link'>All</a>
+              <a href="{% url 'review:index' %}" class='nav-link'>Home</a>
             </li>
-            {% for cat in category %}
             <li class="nav-item active">
-              <a
-                class="nav-link"
-                href="{% url 'review:filter_category' cat.pk %}"
-                aria-current="page"
-                >{{cat.name}}</a>
-              
+              <a href="{% url 'review:index' %}" class='nav-link'>All </a>
             </li>
-            {% endfor %}
+            <li class="nav-item active">
+              <a href="{% url 'review:index' %}" class='nav-link'>About</a>
+            </li>
+            <li class="nav-item active">
+              <a href="{% url 'review:index' %}" class='nav-link'>Contact</a>
+            </li>
+            
 
           </ul>
-          <form action="" method=" GET" class="d-flex ms-auto mt-3 mt-lg-0">
-            {% csrf_token %}
-            <input
-              class="form-control mr-sm-2 mr-auto"
-              type="text"
-              name="keyword"
-              placeholder="Search Product"
-              required
-            />
-            <button class="btn btn-primary">Search</button>
-          </form>
         </div>
 
       </div>

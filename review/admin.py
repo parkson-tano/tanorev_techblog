@@ -7,7 +7,7 @@ class PostAdmin(admin.ModelAdmin):
     search_fields = ('author',)
 
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('user', 'post', 'comment')
+    list_display = ('user', 'post')
 
 admin.site.register(Post, PostAdmin)
 admin.site.register(Category)

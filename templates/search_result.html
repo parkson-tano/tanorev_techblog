@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% load static %}
+{% block header %}
+<header class="masthead" style="background-image: url('{% static 'home-bg.jpg' %}')">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="site-heading">
+                    <h1>Clean Blog</h1>
+                    <span class="subheading">Center of Diversity</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+{% endblock header %}
+{% block content %}
+<div class="row gx-4 gx-lg-5 justify-content-center">
+
+    <div class="col-md-10 col-lg-8 col-xl-7">
+        {% for res in result %}
+        <div class="post-preview">
+            <a href="{% url 'review:postdetail' res.slug %}">
+                <h2 class="post-title">{{res.title}}</h2>
+                <h3 class="post-subtitle">{{res.excerpt}}</h3>
+            </a>
+            <p class="post-meta">
+                Posted by
+                <a href="#!">{{res.author}}</a>
+                on {{res.date_created|timesince}}
+                {{ res.comment_set.all.count }} comment
+                {{res.view_count}} seen
+            </p>
+
+        </div>
+        <!-- Divider-->
+        <hr class="my-4" />
+        {% empty %}
+        <li>
+            not found
+        </li>
+        {% endfor %}
+
+
+    </div>
+
+    <div class="col-lg-4">
+        <!-- Side widgets-->
+        <div class="col-lg-4">
+            <!-- Search widget-->
+            <div class="card mb-4">
+                <div class="card-header">Search</div>
+                <div class="card-body">
+
+                    <form action="{% url 'review:search' %}" method="GET">
+                        <div class="input-group">
+                            {% csrf_token %}
+                            <input class="form-control" type="text" placeholder="Enter search term..."
+                                aria-label="Enter search term..." aria-describedby="button-search" name='keyword' />
+                            <button class="btn btn-primary">Go!</button>
+                        </div>
+                    </form>
+
+
+
+                </div>
+            </div>
+            <!-- Categories widget-->
+            <div class="card mb-4">
+                <div class="card-header">Categories</div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-6 col-lg-12">
+                            <ul class="list-unstyled mb-0">
+                                {% for cat in all_categories %}
+                                <li class="mb-2"><a href="{% url 'review:filter_category' cat.slug %}">
+                                        <strong>
+                                            {{cat.name}}
+                                        </strong>
+                                    </a>
+                                    <ul>
+                                        {% for sub in cat.subcategory_set.all %}
+                                        <li>
+                                            <a href="{% url 'review:filter_subcategory' sub.slug %}">
+                                                {{sub.name}}
+                                            </a>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Side widget-->
+            <div class="card mb-4">
+                <div class="card-header">Recommended</div>
+                <div class="card-body">You can put anything you want inside of these side widgets. They are easy to use,
+                    and feature the Bootstrap 5 card component!</div>
+            </div>
+        </div>
+
+    </div>
+    {% endblock content %}

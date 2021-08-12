@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load socialaccount %}
+{% providers_media_js %}
 {% load crispy_forms_tags %}
 {% block title %} home {% endblock title %}
 {% block header %}
@@ -18,9 +20,132 @@
 {% endblock header %}
 {% block content %}
 
-<div class="row gx-4 gx-lg-5 justify-content-center">
-    {% for p in post %}
-    <div class="col-md-10 col-lg-8 col-xl-7">
+<!-- {% if user.is_authenticated %}
+<h1>{{user.username}}</h1>
+<img src="{{ user.userprofile.profile_image.url }}" class="rounded-circle" alt="">
+{% else %}
+<a href="{% provider_login_url 'google' %}" class='btn btn-primary'>Login with Google</a>
+<a href="{% provider_login_url 'facebook' method='js_sdk' %}" class='btn btn-primary'>Login with Facebook</a>
+{% endif %} -->
+
+<!-- Page content-->
+<div class="container">
+    <div class="row mt-4">
+        <!-- Blog entries-->
+        <div class="col-lg-8">
+            <!-- Featured blog post-->
+            <div class="card mb-4">
+                <a href="#!"><img class="card-img-top" src="{{post.first.image_1.url}}" alt="..."
+                        style="height:15rem" /></a>
+                <div class="card-body">
+                    <div class="small text-muted">{{post.first.date_created}}</div>
+                    <h2 class="card-title">{{post.first.title}}</h2>
+                    <p class="card-text">{{post.first.excerpt}}</p>
+                    <p class="mute-text">{{post.first.category}}</p>
+                    <p class="mute-text">{{post.first.subcategory}}
+                        {{post.first.comment_set.all.count}} Comment
+                        {{ post.first.view_count }}
+                    </p>
+                    <a class="btn btn-primary" href="{% url 'review:postdetail' post.first.slug %}">Read more →</a>
+                </div>
+            </div>
+            <!-- Nested row for non-featured blog posts-->
+            <div class="row">
+                {% for p in post %}
+                <div class="col-lg-6">
+                    <!-- Blog post-->
+
+                    <div class="card mb-4">
+                        <a href="#!"><img class="card-img-top" src="{{p.image_1.url}}" alt="..."
+                                style="height:15rem" /></a>
+                        <div class="card-body">
+                            <div class="small text-muted">{{p.date_created|timesince}}</div>
+                            <h2 class="card-title h4">{{p.title}}</h2>
+                            <p class="card-text">{{p.excerpt}}</p>
+                            <p class="mute-text">{{p.category}}</p>
+                            <p class="mute-text">{{p.subcategory}}
+                                {{p.comment_set.all.count}} Comment{{p.comment_set.all.count|pluralize }}
+                                {{ p.view_count }}
+                            </p>
+
+                            <a class="btn btn-primary" href="{% url 'review:postdetail' p.slug %}">Read more →</a>
+                        </div>
+                    </div>
+
+
+                    <!-- Blog post-->
+                </div>
+                {% endfor %}
+            </div>
+            <!-- Pagination-->
+            <nav aria-label="Pagination">
+                <hr class="my-0" />
+                <ul class="pagination justify-content-center my-4">
+                    <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1"
+                            aria-disabled="true">Newer</a></li>
+                    <li class="page-item active" aria-current="page"><a class="page-link" href="#!">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#!">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#!">3</a></li>
+                    <li class="page-item disabled"><a class="page-link" href="#!">...</a></li>
+                    <li class="page-item"><a class="page-link" href="#!">15</a></li>
+                    <li class="page-item"><a class="page-link" href="#!">Older</a></li>
+                </ul>
+            </nav>
+        </div>
+        <!-- Side widgets-->
+        <div class="col-lg-4">
+            <!-- Search widget-->
+            <div class="card mb-4">
+                <div class="card-header">Search</div>
+                <div class="card-body">
+
+                    <form action="{% url 'review:search' %}" method="GET">
+                        <div class="input-group">
+                            {% csrf_token %}
+                            <input class="form-control" type="text" placeholder="Enter search term..."
+                                aria-label="Enter search term..." aria-describedby="button-search" name='keyword' />
+                            <button class="btn btn-primary">Go!</button>
+                        </div>
+                    </form>
+
+
+
+                </div>
+            </div>
+            <!-- Categories widget-->
+            <div class="card mb-4">
+                <div class="card-header">Categories</div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-6 col-lg-12">
+                            <ul class="list-unstyled mb-0">
+                                {% for cat in all_categories %}
+                                <li class="mb-2"><a href="{% url 'review:filter_category' cat.slug %}">
+                                        <strong>
+                                            {{cat.name}}
+                                        </strong>
+                                    </a>
+                                    <ul>
+                                        {% for sub in cat.subcategory_set.all %}
+                                        <li>
+                                            <a href="{% url 'review:filter_subcategory' sub.slug %}">
+                                                {{sub.name}}
+                                            </a>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Side widget-->
+            <div class="card mb-4">
+                <div class="card-header">Recent Post</div>
+                <div class="card-body">
+                    {% for p in recent_post %}
         <div class="post-preview">
             <a href="{% url 'review:postdetail' p.slug %}">
                 <h2 class="post-title">{{p.title}}</h2>
@@ -29,15 +154,24 @@
             <p class="post-meta">
                 Posted by
                 <a href="#!">{{p.author}}</a>
-                on {{p.date_created}}
+                on {{p.date_created|timesince}}
             </p>
 
         </div>
         <!-- Divider-->
         <hr class="my-4" />
+        {% endfor %}  
+                </div>
+            </div>
+        </div>
     </div>
-
-    {% endfor %}
-
 </div>
+</div>
+<!-- Footer-->
+<footer class="py-5 bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2021</p>
+    </div>
+</footer>
+
 {% endblock content%}

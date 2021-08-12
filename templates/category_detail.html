@@ -12,28 +12,12 @@
         </div>
     </div>
 </header>
-<nav class="navbar navbar-expand-lg navbar-light bg-light" style='color:black'>
-    <div class="container">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent1"
-            aria-controls="navbarSupportedContent1" aria-expanded="false" aria-label="Toggle navigation"><span
-                class="navbar-toggler-icon"></span></button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent1">
-            <div class="navbar-nav">
-                                <a class="nav-link" href="#!">All</a></li>
-                {% for sub in subcategory %}
-                <a class="nav-link"
-                        href="{% url 'review:filter_subcategory' sub.pk %}">{{sub.name}}</a>
-                {% endfor %}
-            </div>
-
-        </div>
-    </div>
-</nav>
 {% endblock header %}
 {% block content %}
 <div class="row gx-4 gx-lg-5 justify-content-center">
-    {% for p in post %}
+    
     <div class="col-md-10 col-lg-8 col-xl-7">
+       {% for p in post %}
         <div class="post-preview">
             <a href="{% url 'review:postdetail' p.slug %}">
                 <h2 class="post-title">{{p.title}}</h2>
@@ -43,14 +27,57 @@
                 Posted by
                 <a href="#!">{{p.author}}</a>
                 on {{p.date_created}}
+                {{ p.comment_set.all.count }} comment
+                {{p.view_count}} seen
             </p>
 
         </div>
         <!-- Divider-->
         <hr class="my-4" />
+        {% endfor %}  
+        
+          
     </div>
 
-    {% endfor %}
+<div class="col-lg-4">
+            <!-- Search widget-->
+            <div class="card mb-4">
+                <div class="card-header">Search</div>
+                <div class="card-body">
+                    <div class="input-group">
+                        <input class="form-control" type="text" placeholder="Enter search term..."
+                            aria-label="Enter search term..." aria-describedby="button-search" />
+                        <button class="btn btn-primary" id="button-search" type="button">Go!</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Categories widget-->
+            <div class="card mb-4">
+                <div class="card-header">SubCategories</div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-6 col-lg-12">
+                            <ul class="list-unstyled mb-0">
+                                    <ul>
+                                        {% for sub in subcategory %}
+                                        <li>
+                                            <a href="{% url 'review:filter_subcategory' sub.slug %}">
+                                                {{sub.name}}
+                                            </a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <!-- Side widget-->
+            <div class="card mb-4">
+                <div class="card-header">Recommended</div>
+                <div class="card-body">You can put anything you want inside of these side widgets. They are easy to use,
+                    and feature the Bootstrap 5 card component!</div>
+            </div>
 
 </div>
 {% endblock content %}
