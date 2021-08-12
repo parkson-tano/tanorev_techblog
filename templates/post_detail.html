@@ -6,9 +6,9 @@
 {% endblock title %}
 {% block header %}
 <header class="masthead" style="background-image: url({{post.image_1.url}})">
-  <div class="container position-relative px-4 px-lg-5">
+  <div class="container position-relative px-4 px-lg-5"></div>
     <div class="row gx-4 gx-lg-5 justify-content-center">
-      <div class="col-md-10 col-lg-8 col-xl-7">
+      <div class="col-md-10 col-lg-8 col-xl-12">
         <div class="site-heading">
           <h1>{{post.title}}</h1>
           <span class="subheading">{{post.excerpt}}</span>
@@ -20,12 +20,12 @@
 {% endblock header %}
 {% block content %}
 <!-- Page content-->
-<div class="container">
+<div>
   <div class="row mt-4">
     <!-- Blog entries-->
     <div class="col-lg-8">
       <!-- Featured blog post-->
-      <div class="card mb-4">
+      <div class="card mb-4 col-sm-12">
         <div class="card-body">
 
           <p class="card-text">{{post.content|safe}}</p>
@@ -47,16 +47,16 @@
             </form>
 
             {% if comments %}
-            <strong class="text-secondary">{{ object.number_of_comments }}
-              Comment{{object.number_of_comments|pluralize}}</strong>
+            <strong class="text-secondary">{{ post.comment_set.all.count }}
+              Comment{{ post.comment_set.all.count|pluralize }}</strong>
             <hr>
             <ul>
               {% for comment in comments %}
               <li>
                 <div>
                   <span>
-                    <strong class="text-info">{{ comment.author }} </strong>
-                    <small class="text-muted">{{ comment.date_posted }}</small>
+                    <strong class="text-info">{{ comment.name }} </strong>
+                    <small class="text-muted">{{ comment.date_created }}</small>
                   </span>
                   <p>
                     {{ comment.content|safe }}
