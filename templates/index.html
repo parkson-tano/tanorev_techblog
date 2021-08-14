@@ -78,19 +78,38 @@
                 {% endfor %}
             </div>
             <!-- Pagination-->
-            <nav aria-label="Pagination">
-                <hr class="my-0" />
-                <ul class="pagination justify-content-center my-4">
-                    <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1"
-                            aria-disabled="true">Newer</a></li>
-                    <li class="page-item active" aria-current="page"><a class="page-link" href="#!">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#!">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#!">3</a></li>
-                    <li class="page-item disabled"><a class="page-link" href="#!">...</a></li>
-                    <li class="page-item"><a class="page-link" href="#!">15</a></li>
-                    <li class="page-item"><a class="page-link" href="#!">Older</a></li>
-                </ul>
-            </nav>
+            <nav>
+    <ul class="pagination" aria-label="...">
+        {% if product_list.has_previous %}
+        <li class="page-item">
+            <a href="?page={{ post.previous_page_number }}" class="page-link y-5">Previous Posts</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a href="" class="page-link" tabindex="-1" aria-disabled="true">Previous Post</a>
+        </li>
+        {% endif %}
+
+        {% for i in product_list.paginator.page_range %}
+
+        {% if i == product_list.number %}
+        <li class="page-item active"> <a class="page-link" disabled> {{ i}}</a> </li>
+        {% else %}
+        <li class="page-item"> <a href="?page={{i}}" class="page-link"> {{ i}}</a> </li>
+        {% endif %}
+        {% endfor %}
+
+        {% if product_list.has_next %}
+        <li class="page-item">
+            <a href="?page={{ product_list.next_page_number }}" class="page-link">Next Post</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a href="" class="page-link" tabindex="-1" aria-disabled="true">Next Post</a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
         </div>
         <!-- Side widgets-->
         <div class="col-lg-4">
@@ -112,12 +131,13 @@
 
                 </div>
             </div>
+            
             <!-- Categories widget-->
             <div class="card mb-4">
                 <div class="card-header">Categories</div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-sm-6 col-lg-12">
+                        <div class="col-sm-12 col-lg-12">
                             <ul class="list-unstyled mb-0">
                                 {% for cat in all_categories %}
                                 <li class="mb-2"><a href="{% url 'review:filter_category' cat.slug %}">

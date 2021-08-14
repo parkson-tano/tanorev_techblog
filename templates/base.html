@@ -60,7 +60,7 @@
               <a href="{% url 'review:index' %}" class='nav-link'>About</a>
             </li>
             <li class="nav-item active">
-              <a href="{% url 'review:index' %}" class='nav-link'>Contact</a>
+              <a href="{% url 'review:contact' %}" class='nav-link'>Contact</a>
             </li>
             
 
@@ -128,5 +128,6 @@
     <div class="container-fluid px-4 px-lg-5">{% block content %} {% endblock %}</div>
     <script src="{% static 'dist/js/bootstrap.min.js' %}"></script>
     <script src="{% static 'scripts.js' %}"></script>
+    <script src="{% static 'js/form-validation.js' %}"></script>
   </body>
 </html>

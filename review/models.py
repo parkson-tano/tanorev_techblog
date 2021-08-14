@@ -6,6 +6,21 @@ from tinymce.models import HTMLField
 from ckeditor.fields import RichTextField
 from autoslug import AutoSlugField
 # Create your models here.
+
+class Admin(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    email = models.EmailField()
+    date_created = models.DateTimeField(auto_now_add=True)
+
+class Contact(models.Model):
+	first_name = models.CharField(max_length=256)
+	email = models.EmailField(max_length=256, null=True, blank=True)
+	message = models.TextField(null=True, blank=True)
+	date_created = models.DateTimeField(auto_now_add=True)
+
+	def __str__(self):
+		return self.first_name
+
 class Category(models.Model):
     name = models.CharField(max_length=200)
     slug = AutoSlugField(populate_from='name')

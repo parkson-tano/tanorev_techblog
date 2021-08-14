@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}
+contact_us
+{% endblock title %}
+{% load static %}
+<!-- Custom styles for this template -->
+
+{% block content %}
+<div class="container">
+  <main>
+    <div class="py-5 text-center">
+      <h2>Send Us A Message</h2>
+    </div>
+    <div class="col-md-7 col-lg-8">
+      <form class="needs-validation" method="post" action="" novalidate>
+        {% csrf_token %}
+        <div class="row g-3">
+          <div class="col-sm-12">
+            <label for="firstName" class="form-label">First name</label>
+            {{form.first_name}}
+            <div class="invalid-feedback">
+              Valid first name is required.
+            </div>
+          </div>
+
+
+
+
+
+          <div class="col-12">
+            <label for="email" class="form-label">Email</span></label>
+            {{form.email}}
+            <div class="invalid-feedback">
+              Please enter a valid email address
+            </div>
+            <div class="col-md-3 col-lg-12">
+              <label for="zip" class="form-label">Message</label>
+              {{form.message}}
+              <div class="invalid-feedback">
+                Message is Require
+              </div>
+            </div>
+          </div>
+
+          <hr class="my-4">
+
+          <button class="w-100 btn btn-primary btn-lg" type="submit">Submit</button>
+      </form>
+
+    </div>
+</div>
+
+</main>
+</div>
+
+
+{% endblock content %}
