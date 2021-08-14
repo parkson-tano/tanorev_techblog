@@ -8,10 +8,10 @@ contact_us
 {% block content %}
 <div class="container">
   <main>
-    <div class="py-5 text-center">
+    <div class="py-5 text-center p-4">
       <h2>Send Us A Message</h2>
     </div>
-    <div class="col-md-7 col-lg-8">
+    <div class="col-md-7 col-lg-8 gx-4 gx-lg-5 justify-content-center">
       <form class="needs-validation" method="post" action="" novalidate>
         {% csrf_token %}
         <div class="row g-3">
@@ -22,10 +22,6 @@ contact_us
               Valid first name is required.
             </div>
           </div>
-
-
-
-
 
           <div class="col-12">
             <label for="email" class="form-label">Email</span></label>

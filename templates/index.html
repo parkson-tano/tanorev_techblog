@@ -35,8 +35,8 @@
         <div class="col-lg-8">
             <!-- Featured blog post-->
             <div class="card mb-4">
-                <a href="#!"><img class="card-img-top" src="{{post.first.image_1.url}}" alt="..."
-                        style="height:15rem" /></a>
+                <a href="{{post.first.image_1.url}}"><img class="card-img-top" src="{{post.first.image_1.url}}" alt="..."
+                        style="" /></a>
                 <div class="card-body">
                     <div class="small text-muted">{{post.first.date_created}}</div>
                     <h2 class="card-title">{{post.first.title}}</h2>
@@ -50,66 +50,70 @@
                 </div>
             </div>
             <!-- Nested row for non-featured blog posts-->
-            <div class="row">
+            <div class="row mb-2">
                 {% for p in post %}
                 <div class="col-lg-6">
                     <!-- Blog post-->
 
                     <div class="card mb-4">
-                        <a href="#!"><img class="card-img-top" src="{{p.image_1.url}}" alt="..."
-                                style="height:15rem" /></a>
-                        <div class="card-body">
-                            <div class="small text-muted">{{p.date_created|timesince}}</div>
-                            <h2 class="card-title h4">{{p.title}}</h2>
-                            <p class="card-text">{{p.excerpt}}</p>
-                            <p class="mute-text">{{p.category}}</p>
-                            <p class="mute-text">{{p.subcategory}}
-                                {{p.comment_set.all.count}} Comment{{p.comment_set.all.count|pluralize }}
-                                {{ p.view_count }}
-                            </p>
+                        <div class='card-horizontal'>
 
-                            <a class="btn btn-primary" href="{% url 'review:postdetail' p.slug %}">Read more →</a>
+                            <a href="{{p.image_1.url}}"><img class="card-img" src="{{p.image_1.url}}" alt="..." 
+                                style='height:15rem' /></a>
+
+
+                            <div class="card-body">
+                                <div class="small text-muted">{{p.date_created|timesince}}</div>
+                                <h2 class="card-title h4">{{p.title}}</h2>
+                                <p class="card-text">{{p.excerpt}}</p>
+                                <p class="mute-text">{{p.category}}</p>
+                                <p class="mute-text">{{p.subcategory}}
+                                    {{p.comment_set.all.count}} Comment{{p.comment_set.all.count|pluralize }}
+                                    {{ p.view_count }}
+                                </p>
+
+                                <a class="btn btn-success" href="{% url 'review:postdetail' p.slug %}">Read more →</a>
+                            </div>
                         </div>
+
                     </div>
-
-
                     <!-- Blog post-->
                 </div>
                 {% endfor %}
             </div>
             <!-- Pagination-->
             <nav>
-    <ul class="pagination" aria-label="...">
-        {% if product_list.has_previous %}
-        <li class="page-item">
-            <a href="?page={{ post.previous_page_number }}" class="page-link y-5">Previous Posts</a>
-        </li>
-        {% else %}
-        <li class="page-item disabled">
-            <a href="" class="page-link" tabindex="-1" aria-disabled="true">Previous Post</a>
-        </li>
-        {% endif %}
+                <ul class="pagination" aria-label="...">
+                    {% if product_list.has_previous %}
+                    <li class="page-item">
+                        <a href="?page={{ post.previous_page_number }}" class="page-link y-5">Previous Posts</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a href="" class="page-link" tabindex="-1" aria-disabled="true">Previous Post</a>
+                    </li>
+                    {% endif %}
 
-        {% for i in product_list.paginator.page_range %}
+                    {% for i in product_list.paginator.page_range %}
 
-        {% if i == product_list.number %}
-        <li class="page-item active"> <a class="page-link" disabled> {{ i}}</a> </li>
-        {% else %}
-        <li class="page-item"> <a href="?page={{i}}" class="page-link"> {{ i}}</a> </li>
-        {% endif %}
-        {% endfor %}
+                    {% if i == product_list.number %}
+                    <li class="page-item active"> <a class="page-link" disabled> {{ i}}</a> </li>
+                    {% else %}
+                    <li class="page-item"> <a href="?page={{i}}" class="page-link"> {{ i}}</a> </li>
+                    {% endif %}
+                    {% endfor %}
 
-        {% if product_list.has_next %}
-        <li class="page-item">
-            <a href="?page={{ product_list.next_page_number }}" class="page-link">Next Post</a>
-        </li>
-        {% else %}
-        <li class="page-item disabled">
-            <a href="" class="page-link" tabindex="-1" aria-disabled="true">Next Post</a>
-        </li>
-        {% endif %}
-    </ul>
-</nav>
+                    {% if product_list.has_next %}
+                    <li class="page-item">
+                        <a href="?page={{ product_list.next_page_number }}" class="page-link">Next Post</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a href="" class="page-link" tabindex="-1" aria-disabled="true">Next Post</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
         </div>
         <!-- Side widgets-->
         <div class="col-lg-4">
@@ -131,7 +135,7 @@
 
                 </div>
             </div>
-            
+
             <!-- Categories widget-->
             <div class="card mb-4">
                 <div class="card-header">Categories</div>
@@ -166,21 +170,21 @@
                 <div class="card-header">Recent Post</div>
                 <div class="card-body">
                     {% for p in recent_post %}
-        <div class="post-preview">
-            <a href="{% url 'review:postdetail' p.slug %}">
-                <h2 class="post-title">{{p.title}}</h2>
-                <h3 class="post-subtitle">{{p.excerpt}}</h3>
-            </a>
-            <p class="post-meta">
-                Posted by
-                <a href="#!">{{p.author}}</a>
-                on {{p.date_created|timesince}}
-            </p>
+                    <div class="post-preview">
+                        <a href="{% url 'review:postdetail' p.slug %}">
+                            <h2 class="post-title">{{p.title}}</h2>
+                            <h3 class="post-subtitle">{{p.excerpt}}</h3>
+                        </a>
+                        <p class="post-meta">
+                            Posted by
+                            <a href="#!">{{p.author}}</a>
+                            on {{p.date_created|timesince}}
+                        </p>
 
-        </div>
-        <!-- Divider-->
-        <hr class="my-4" />
-        {% endfor %}  
+                    </div>
+                    <!-- Divider-->
+                    <hr class="my-4" />
+                    {% endfor %}
                 </div>
             </div>
         </div>
