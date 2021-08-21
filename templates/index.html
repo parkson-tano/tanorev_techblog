@@ -6,7 +6,7 @@
 {% block title %} home {% endblock title %}
 {% block header %}
 <header class="masthead" style="background-image: url('{% static 'home-bg.jpg' %}')">
-    <div class="container position-relative px-4 px-lg-5">
+    <div class="container position-relative px-4 px-lg-5 ">
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">
                 <div class="site-heading">
@@ -29,8 +29,8 @@
 {% endif %} -->
 
 <!-- Page content-->
-<div class="container">
-    <div class="row mt-4">
+<div class="container-fluid bg-success">
+    <div class="row mt-1">
         <!-- Blog entries-->
         <div class="col-lg-8">
             <!-- Featured blog post-->
@@ -46,7 +46,7 @@
                         {{post.first.comment_set.all.count}} Comment
                         {{ post.first.view_count }}
                     </p>
-                    <a class="btn btn-primary" href="{% url 'review:postdetail' post.first.slug %}">Read more →</a>
+                    <a class="btn btn-danger" href="{% url 'review:postdetail' post.first.slug %}">Read more →</a>
                 </div>
             </div>
             <!-- Nested row for non-featured blog posts-->
@@ -72,7 +72,7 @@
                                     {{ p.view_count }}
                                 </p>
 
-                                <a class="btn btn-success" href="{% url 'review:postdetail' p.slug %}">Read more →</a>
+                                <a class="btn btn-danger" href="{% url 'review:postdetail' p.slug %}">Read more →</a>
                             </div>
                         </div>
 
@@ -173,7 +173,7 @@
                     <div class="post-preview">
                         <a href="{% url 'review:postdetail' p.slug %}">
                             <h2 class="post-title">{{p.title}}</h2>
-                            <h3 class="post-subtitle">{{p.excerpt}}</h3>
+                            <h3 class="post-subtitle">{{p.excerpt|slice:80}}</h3>
                         </a>
                         <p class="post-meta">
                             Posted by
