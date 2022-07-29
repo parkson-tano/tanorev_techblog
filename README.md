@@ -1,2 +1,2 @@
-# project
+# Blog Built with Django
  
