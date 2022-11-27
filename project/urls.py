@@ -22,8 +22,8 @@ from django.contrib.auth.views import LogoutView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('review.urls')),
-    path('accounts/', include('allauth.urls')), 
-    path('tinymce/', include('tinymce.urls')),
+    path("accounts/", include("django.contrib.auth.urls")),
+    path('ckeditor', include('ckeditor_uploader.urls')),
     
 ]
 

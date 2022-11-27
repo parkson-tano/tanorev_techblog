@@ -42,14 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'crispy_forms',
     'review',
-    'rest_framework',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
-    'allauth.socialaccount.providers.facebook',
-    'tinymce',
     'ckeditor',
+    'ckeditor_uploader',
 
 ]
 
@@ -90,13 +84,22 @@ WSGI_APPLICATION = 'project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': str(BASE_DIR / 'db.sqlite3'),
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': str(BASE_DIR / 'db.sqlite3'),
+        
+#     }
+# }
 
+DATABASES = {"default": {"ENGINE": "django.db.backends.postgresql_psycopg2",
+                         "NAME": "postgres",
+                         "USER": "postgres",
+                         "PASSWORD": "danielTano123@",
+                         "HOST": "db.chlugwdaxlynuzuiwkhd.supabase.co",
+                         "PORT": "5432",
+                         }
+             }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -155,47 +158,28 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend'
 ]
 
-SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        'SCOPE': [
-            'profile',
-            'email',
-
-        ],
-        'AUTH_PARAMS': {
-            'access_type': 'online',
-        }
-    },
-    'facebook':
-       {'METHOD': 'oauth2',
-        'SCOPE': ['email','public_profile', 'user_friends'],
-        'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
-        'FIELDS': [
-            'id',
-            'email',
-            'name',
-            'first_name',
-            'last_name',
-            'verified',
-            'locale',
-            'timezone',
-            'link',
-            'gender',
-            'updated_time'],
-        'EXCHANGE_TOKEN': True,
-        'LOCALE_FUNC': lambda request: 'kr_KR',
-        'VERIFIED_EMAIL': False,
-        'VERSION': 'v2.4'}
-}
-
-SITE_ID = 3
-SOCIAL_AUTH_FACEBOOK_KEY = '1193763114459331'  # App ID
-SOCIAL_AUTH_FACEBOOK_SECRET ='122942ce4da006ca13bfbc622f83c8' #app key
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
-ACCOUNT_EMAIL_REQUIRED=True
-ACCOUNT_USERNAME_REQURIED=True
 
-SOCIALACCOUNT_FORMS = {'signup':'profiles.forms.RegisterForm'}
+CSRF_TRUSTED_ORIGINS = [
+    'https://www.parksontano.com/'
+    'https://www.parksontano.com',
+    'https://*.parksontano.com',
+    'https://*.127.0.0.1',
+    'https://parksontano.com',
+]
+
+CKEDITOR_UPLOAD_PATH ='uploads/'
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'extraPlugins': ','.join(
+            [
+                'youtube',
+            ]
+        ),
+    },
+}

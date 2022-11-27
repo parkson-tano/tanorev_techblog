@@ -20,7 +20,7 @@
 {% endblock header %}
 {% block content %}
 <!-- Page content-->
-<div>
+<div class='container-fluid'>
   <div class="row mt-4">
     <!-- Blog entries-->
     <div class="col-lg-8">
@@ -36,7 +36,7 @@
       <div class="row">
         <div class="col-lg-12 mb-3">
           <!-- Blog post-->
-          <h2>Leave your comment!</h2>
+          <h2>Leave your comment or Question!</h2>
           <div id="comments_section">
             <form method="POST" class='needs-validation'>
               {% csrf_token %}
@@ -151,11 +151,6 @@
 </div>
 </div>
 </div>
-<!-- Footer-->
-<footer class="py-5 bg-dark">
-  <div class="container">
-    <p class="m-0 text-center text-white">Copyright &copy; Your Website 2021</p>
-  </div>
-</footer>
+
 
 {% endblock content%}

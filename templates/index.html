@@ -1,7 +1,5 @@
 {% extends 'base.html' %}
 {% load static %}
-{% load socialaccount %}
-{% providers_media_js %}
 {% load crispy_forms_tags %}
 {% block title %} home {% endblock title %}
 {% block header %}
@@ -20,16 +18,8 @@
 {% endblock header %}
 {% block content %}
 
-<!-- {% if user.is_authenticated %}
-<h1>{{user.username}}</h1>
-<img src="{{ user.userprofile.profile_image.url }}" class="rounded-circle" alt="">
-{% else %}
-<a href="{% provider_login_url 'google' %}" class='btn btn-primary'>Login with Google</a>
-<a href="{% provider_login_url 'facebook' method='js_sdk' %}" class='btn btn-primary'>Login with Facebook</a>
-{% endif %} -->
-
 <!-- Page content-->
-<div class="container-fluid bg-success">
+<div class="container-fluid">
     <div class="row mt-1">
         <!-- Blog entries-->
         <div class="col-lg-8">
@@ -191,11 +181,5 @@
     </div>
 </div>
 </div>
-<!-- Footer-->
-<footer class="py-5 bg-dark">
-    <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2021</p>
-    </div>
-</footer>
 
 {% endblock content%}

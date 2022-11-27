@@ -7,6 +7,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
+        {% block ogmeta %}{% endblock ogmeta %}
     <link rel="stylesheet" href="{% static 'dist/css/bootstrap.min.css' %}" />
     <link rel="stylesheet" href="{% static 'dist/css/bootstrap.css' %}" />
     <link rel="stylesheet" href="{% static 'style.css' %}" />
@@ -40,7 +41,7 @@
 
   <nav class="navbar navbar-expand-lg navbar-light bg-transparent" style="position:sticky">
       <div class="container-fluid">
-        <a class="navbar-brand" href="{% url 'review:index' %}">DaniRev</a>
+        <a class="navbar-brand" href="{% url 'review:index' %}">TanoClass</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -74,62 +75,14 @@
       </div>
     </nav>
   <body>
-    <!-- Navigation-->
-    <!-- <nav class="navbar navbar-expand-lg navbar-sm-light">
-      <div class="container px-4 px-lg-5">
-        <a class="navbar-brand" href="{% url 'review:index'%}"
-          >DaniRev</a
-        >
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarResponsive"
-          aria-controls="navbarResponsive"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          Menu
-          <i class="fas fa-bars"></i>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ms-auto py-5 py-lg-2">
-            <li class="nav-item">
-              <a
-                class="nav-link px-lg-3 py-3 py-lg-4"
-                href="{% url 'review:index'%}"
-                >Home</a
-              >
-            </li>
-            {% for cat in category %}
-            <li class="nav-item active">
-              <a
-                class="nav-link px-lg-3 py-3 py-lg-0"
-                href="{% url 'review:filter_category' cat.pk %}"
-                aria-current="page"
-                >{{cat.name}}</a
-              >
-              {% endfor %}
-            </li>
-          </ul>
-          <form action="" method=" GET" class="d-flex">
-            {% csrf_token %}
-            <input
-              class="form-control mr-sm-2 ml-3"
-              type="text"
-              name="keyword"
-              placeholder="Search"
-              required
-            />
-            <button class="btn btn-primary">Search</button>
-          </form>
-        </div>
-      </div>
-    </nav> -->
-    <!-- Page Header-->
-    <!-- Main Content-->
     {% block header %} {% endblock header %}
     {% block content %} {% endblock %}
+    <!-- Footer-->
+<footer class="py-5 bg-dark">
+  <div class="container">
+    <p class="m-0 text-center text-white">Copyright &copy; parksontano.com 2022</p>
+  </div>
+</footer>
     <script src="{% static 'dist/js/bootstrap.min.js' %}"></script>
     <script src="{% static 'scripts.js' %}"></script>
     <script src="{% static 'js/form-validation.js' %}"></script>
