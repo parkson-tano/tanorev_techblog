@@ -17,8 +17,8 @@
 <div class="row gx-4 gx-lg-5 justify-content-center">
     {% for p in post %}
     <div class="col-md-10 col-lg-8 col-xl-7">
-        <div class="post-preview">
-            <a href="{% url 'review:postdetail' p.slug %}">
+        <div class="post-pmain">
+            <a href="{% url 'main:postdetail' p.slug %}">
                 <h2 class="post-title">{{p.title}}</h2>
                 <h3 class="post-subtitle">{{p.excerpt}}</h3>
             </a>

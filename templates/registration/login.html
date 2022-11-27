@@ -1,4 +1,4 @@
-{% extends "adminpages/adminbase.html" %}
+{% extends "admin/adminbase.html" %}
 {% load crispy_forms_tags %}
 {% block title %}
     Login 
@@ -18,7 +18,7 @@
 					{% endif %}
     			</form>
                     {% if request.GET.next %}?next={{request.GET.next}} 
-                {% endif %}">Already has an account?</a></p>
+                {% endif %}
 
     		</div>
     	</div>

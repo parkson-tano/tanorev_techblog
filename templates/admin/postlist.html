@@ -1,0 +1,68 @@
+{% extends "admin/adminbase.html" %}
+{% block title %}
+    All Post
+{% endblock title %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-sm-12">
+            <h3>All post</h3>
+            <hr>
+            <a class="btn btn-success" href="{% url 'main:create_post' %}">Add new Post</a>
+            <table class='table table-striped'>
+                <thead>
+                    <tr>
+                        <th>SN</th>
+                        <th>Post Title</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p in post_list %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ p.title }}</td>
+                        <td>{{ p.status }}</td>
+                        <td> <button  data-bs-toggle="modal"
+                                        data-bs-target="#delete_post">
+                                       <span class="material-icons">delete</span>
+                                    </button>
+                        <a href= "{% url 'main:edit_post' p.id %}"> 
+                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                            <span class="material-icons">create</span>
+                         </a> </td>
+                    </tr>
+                    <div class="modal fade" id="delete_post" tabindex="-1"
+                                aria-labelledby="delete_post" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title text-center" id="delete_post">Delete Post
+                                            </h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body text-center">
+                                            Are You sure you want to remove this Post?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">No</button>
+                                            <form id='subject-delete' method="POST"
+                                                action="{% url 'main:delete_post' p.id %}">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn btn-danger">Yes</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -8,8 +8,10 @@
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">
                 <div class="site-heading">
-                    <h1>Clean Blog</h1>
-                    <span class="subheading">Center of Diversity</span>
+                    <h3>Welcome to Parkson Tano</h3>
+                    <span class="subheading">
+                        Let's Learn and grow
+                    </span>
                 </div>
             </div>
         </div>
@@ -36,7 +38,7 @@
                         {{post.first.comment_set.all.count}} Comment
                         {{ post.first.view_count }}
                     </p>
-                    <a class="btn btn-danger" href="{% url 'review:postdetail' post.first.slug %}">Read more →</a>
+                    <a class="btn btn-danger" href="{% url 'main:postdetail' post.first.slug %}">Read more →</a>
                 </div>
             </div>
             <!-- Nested row for non-featured blog posts-->
@@ -62,7 +64,7 @@
                                     {{ p.view_count }}
                                 </p>
 
-                                <a class="btn btn-danger" href="{% url 'review:postdetail' p.slug %}">Read more →</a>
+                                <a class="btn btn-danger" href="{% url 'main:postdetail' p.slug %}">Read more →</a>
                             </div>
                         </div>
 
@@ -112,7 +114,7 @@
                 <div class="card-header">Search</div>
                 <div class="card-body">
 
-                    <form action="{% url 'review:search' %}" method="GET">
+                    <form action="{% url 'main:search' %}" method="GET">
                         <div class="input-group">
                             {% csrf_token %}
                             <input class="form-control" type="text" placeholder="Enter search term..."
@@ -134,7 +136,7 @@
                         <div class="col-sm-12 col-lg-12">
                             <ul class="list-unstyled mb-0">
                                 {% for cat in all_categories %}
-                                <li class="mb-2"><a href="{% url 'review:filter_category' cat.slug %}">
+                                <li class="mb-2"><a href="{% url 'main:filter_category' cat.slug %}">
                                         <strong>
                                             {{cat.name}}
                                         </strong>
@@ -142,7 +144,7 @@
                                     <ul>
                                         {% for sub in cat.subcategory_set.all %}
                                         <li>
-                                            <a href="{% url 'review:filter_subcategory' sub.slug %}">
+                                            <a href="{% url 'main:filter_subcategory' sub.slug %}">
                                                 {{sub.name}}
                                             </a>
                                         </li>
@@ -160,8 +162,8 @@
                 <div class="card-header">Recent Post</div>
                 <div class="card-body">
                     {% for p in recent_post %}
-                    <div class="post-preview">
-                        <a href="{% url 'review:postdetail' p.slug %}">
+                    <div class="post-pmain">
+                        <a href="{% url 'main:postdetail' p.slug %}">
                             <h2 class="post-title">{{p.title}}</h2>
                             <h3 class="post-subtitle">{{p.excerpt|slice:80}}</h3>
                         </a>

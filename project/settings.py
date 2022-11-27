@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
-    'django.contrib.sites',
     'crispy_forms',
     'review',
     'ckeditor',
@@ -158,9 +157,8 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend'
 ]
 
-
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = "/admins/post"
+LOGOUT_REDIRECT_URL = "/accounts/login/"
 
 
 CSRF_TRUSTED_ORIGINS = [

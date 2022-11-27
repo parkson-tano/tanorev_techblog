@@ -91,7 +91,7 @@ class SubCategoryDetailView(TemplateView):
 class ContactView(CreateView):
 	template_name = 'contact_us.html'
 	form_class = ContactForm
-	success_url = reverse_lazy('review:index')
+	success_url = reverse_lazy('main:index')
 	
 	def get(self, request, *args, **kwargs):
 		form = self.form_class
@@ -100,107 +100,62 @@ class ContactView(CreateView):
 	def form_valid(self, form):
 		form.save()
 		return super().form_valid(form)
-
 class AdminPostCreateView(CreateView):
     template_name = 'admin/create.html'
     model = Post
-    fields = ['author', 'category', 'subcategory', 'title', 'image_1', 'excerpt', 'content', 'status']
-    success_url = '/'
+    fields = ['category',
+              'title', 'image_1', 'excerpt', 'content', 'status']
+    success_url = reverse_lazy('main:list_post')
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            pass
+        else:
+            return redirect('/accounts/login/?next=/admins/create/')
+
+        return super().dispatch(request, *args, **kwargs)
 
     def get_queryset(self):
         author = self.request.user
+        content = self.request.GET('editor_content')
         return super().get_queryset()
-    
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        messages.success(self.request, "Successful")
+        form.save()
+        return super().form_valid(form)
+
+
 class AdminPostDeleteView(DeleteView):
-    template_name = 'admin/delete.html'
     model = Post
+    success_url = reverse_lazy('main:list_post')
+
 
 class AdminPostListView(ListView):
     model = Post
     context_object_name = 'post_list'
-    template_name='admin/postlist.html'
+    template_name = 'admin/postlist.html'
+
 
 class AdminPostUpdateView(UpdateView):
-    template_name = 'admin/post_update.html'
+    template_name = 'admin/create.html'
     model = Post
-    fields = "__all__"
+    success_url = reverse_lazy('main:list_post')
+    fields = ['category',
+              'title', 'image_1', 'excerpt', 'content', 'status']
 
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            pass
+        else:
+            return redirect('/accounts/login/?next=/admins/post/')
 
-# class AdminLoginView(FormView):
-# 	template_name = 'adminpages/adminlogin.html'
-# 	form_class = AdminLoginForm
-# 	success_url = reverse_lazy('review:adminhome')
-# 	def form_valid(self, form):
-# 		uname = form.cleaned_data.get('username')
-# 		pword = form.cleaned_data.get('password')
-# 		usr = authenticate(username=uname, password=pword)
-# 		if usr is not None and Admin.objects.filter(user=usr).exists():
-# 			login(self.request, usr)
-# 		else:
-# 			return render(self.request, self.template_name, {'form': self.form_class, 'error':'invalid creditials'})	
+        return super().dispatch(request, *args, **kwargs)
 
-
-# 		return super().form_valid(form)
-
-# 	def get_success_url(self):
-# 		if 'next' in self.request.GET:
-# 			next_url = self.request.GET.get('next')
-# 			print(next_url)
-# 			return next_url 	
-# 		else:
-# 			return self.success_url
-
-# class AdminRequiredMixin(object):
-# 	def dispatch(self, request, *args, **kwargs):
-# 		if request.user.is_authenticated and Admin.objects.filter(user=request.user).exists():
-# 			pass
-# 		else:
-# 			return redirect('/admin-login')
-
-# 		return super().dispatch(request, *args, **kwargs)
-
-# class AdminHomeView(AdminRequiredMixin, TemplateView):
-# 	template_name = 'adminpages/adminhome.html'
-
-# 	def get_context_data(self, **kwargs):
-# 	    context = super().get_context_data(**kwargs)
-# 	    context['post'] = [1,2,3]
-
-# 	    return context
-
-# class AdminLogoutView(View):
+class AdminLogoutView(View):
 	
-# 	def get(self, request):
-# 		logout(request)
-# 		return redirect('review:adminhome')	
+	def get(self, request):
+		logout(request)
+		return redirect('ecommerceapp:adminhome')
 
-# class AdminProductListView(AdminRequiredMixin, ListView):
-# 	template_name = 'adminpages/adminproductlist.html'
-# 	queryset = Post.objects.all().order_by('-id')
-# 	context_object_name = 'allproducts'
-
-# class AdminManageProductView(AdminRequiredMixin, View):
-	
-# 	def get(self, request, **kwargs):
-# 		p_id = self.kwargs['p_id']
-# 		action = request.GET.get('action')
-# 		p_obj = Post.objects.get(id=p_id)
-# 		p_obj.save()	
-
-# 		if action == 'rmv':
-# 			p_obj.save()
-# 			p_obj.delete()
-# 		else:
-# 			pass
-# 		return redirect('review:adminpostlist')
-
-# class AdminProductEditView(AdminRequiredMixin, UpdateView):
-# 	template_name = 'adminpages/adminproductedit.html'
-# 	model = Post
-# 	success_url = reverse_lazy('review:adminproductlist')
-# 	fields = '__all__'
-
-# class AdminProductdeleteView(AdminRequiredMixin, DeleteView):
-# 	template_name = 'adminpages/product_confirm_delete.html'
-# 	model = Post
-# 	success_url = reverse_lazy('review:adminproductlist')

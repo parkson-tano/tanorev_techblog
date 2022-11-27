@@ -18,8 +18,8 @@
     
     <div class="col-md-10 col-lg-8 col-xl-7">
        {% for p in post %}
-        <div class="post-preview">
-            <a href="{% url 'review:postdetail' p.slug %}">
+        <div class="post-pmain">
+            <a href="{% url 'main:postdetail' p.slug %}">
                 <h2 class="post-title">{{p.title}}</h2>
                 <h3 class="post-subtitle">{{p.excerpt}}</h3>
             </a>
@@ -61,7 +61,7 @@
                                     <ul>
                                         {% for sub in subcategory %}
                                         <li>
-                                            <a href="{% url 'review:filter_subcategory' sub.slug %}">
+                                            <a href="{% url 'main:filter_subcategory' sub.slug %}">
                                                 {{sub.name}}
                                             </a>
                                             </li>

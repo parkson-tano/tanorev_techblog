@@ -19,8 +19,8 @@
 
     <div class="col-md-10 col-lg-8 col-xl-7">
         {% for res in result %}
-        <div class="post-preview">
-            <a href="{% url 'review:postdetail' res.slug %}">
+        <div class="post-pmain">
+            <a href="{% url 'main:postdetail' res.slug %}">
                 <h2 class="post-title">{{res.title}}</h2>
                 <h3 class="post-subtitle">{{res.excerpt}}</h3>
             </a>
@@ -52,7 +52,7 @@
                 <div class="card-header">Search</div>
                 <div class="card-body">
 
-                    <form action="{% url 'review:search' %}" method="GET">
+                    <form action="{% url 'main:search' %}" method="GET">
                         <div class="input-group">
                             {% csrf_token %}
                             <input class="form-control" type="text" placeholder="Enter search term..."
@@ -73,7 +73,7 @@
                         <div class="col-sm-6 col-lg-12">
                             <ul class="list-unstyled mb-0">
                                 {% for cat in all_categories %}
-                                <li class="mb-2"><a href="{% url 'review:filter_category' cat.slug %}">
+                                <li class="mb-2"><a href="{% url 'main:filter_category' cat.slug %}">
                                         <strong>
                                             {{cat.name}}
                                         </strong>
@@ -81,7 +81,7 @@
                                     <ul>
                                         {% for sub in cat.subcategory_set.all %}
                                         <li>
-                                            <a href="{% url 'review:filter_subcategory' sub.slug %}">
+                                            <a href="{% url 'main:filter_subcategory' sub.slug %}">
                                                 {{sub.name}}
                                             </a>
                                         </li>

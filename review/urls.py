@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import *
 from django.contrib.auth import views as auth_views
-app_name = 'review'
+app_name = 'main'
 urlpatterns = [
     path('', HomeView.as_view(), name='index'),
     path('<slug>', PostDetailView.as_view(), name='postdetail'),
@@ -9,8 +9,10 @@ urlpatterns = [
     path('subcategory/<slug:slug>', SubCategoryDetailView.as_view(), name='filter_subcategory'),
     path('search/', SearchView.as_view(), name='search'),
     path('contact_us/', ContactView.as_view(), name='contact'),
-    path('admins/create/', AdminPostCreateView.as_view(), name='create_post'),
-    path('admins/<int:pk>/delete/', AdminPostDeleteView.as_view(), name='delete_post'),
-    path('adminedit/<int:pk>/', AdminPostUpdateView.as_view(), name='edit_post'),
-    path('admins/post', AdminPostListView.as_view(), name='list_post'),
+    path('admins/create', AdminPostCreateView.as_view(), name='create_post'),
+    path('admins/<int:pk>/delete',
+         AdminPostDeleteView.as_view(), name='delete_post'),
+    path('adminedit/<int:pk>', AdminPostUpdateView.as_view(), name='edit_post'),
+    path('search', SearchView.as_view(), name='search'),
+    path('admins/post/', AdminPostListView.as_view(), name='list_post'),
 ]
